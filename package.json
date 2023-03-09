@@ -1,0 +1,15 @@
+{
+    "name": "robotframeworktest",
+    "version": "0.0.1",
+    "description": "Python agent processing workitems using robot framework and python",
+    "main": "main.py",
+    "author": "OpenIAP ApS / Allan Zimmermann",
+    "license": "MPL-2.0",
+    "openiap": {
+      "daemon": true
+    },
+    "scripts": {
+    },
+    "keywords": []
+  }
+  
