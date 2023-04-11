@@ -1,5 +1,7 @@
 import asyncio, os, openiap, traceback, zlib, json, logging
 import robot
+# If testig this toward app.openiap.io you MUST update the following line with your own workitem queue name
+defaultwiq = "robotframeworktest"
 class Worker:
     async def __ProcessWorkitem(self, workitem, payload):
         logging.info(f"Processing workitem id {workitem._id} retry #{workitem.retries}")
@@ -63,6 +65,7 @@ class Worker:
     async def main(self):
         self.queue = os.environ.get("queue", "")
         self.wiq = os.environ.get("wiq", "")
+        if(self.wiq == ""): self.wiq = defaultwiq
         self.c = openiap.Client()
         self.c.onconnected = self.onconnected
         if(self.queue == ""): self.queue = self.wiq
@@ -83,6 +86,7 @@ if __name__ == '__main__':
     else:
         logging.basicConfig(format="%(levelname)s:%(message)s", level=loglevel)
     wiq = os.environ.get("wiq", "")
+    if(wiq == ""): wiq = defaultwiq
     if(wiq == ""): raise ValueError("Workitem queue name (wiq) is required")
     w = Worker()
     asyncio.run(w.main())
