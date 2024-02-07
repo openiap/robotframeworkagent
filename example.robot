@@ -1,7 +1,7 @@
 *** Settings ***
 Library         SeleniumLibrary
 *** Variables ***
-${browser}  chrome
+${browser}  headlesschrome
 ${baseurl}  https://the-internet.herokuapp.com/tables
 ${url}      %{url=https://openiap.io}
 *** Test Cases ***

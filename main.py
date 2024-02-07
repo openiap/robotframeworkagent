@@ -7,8 +7,10 @@ class Worker:
         logging.info(f"Processing workitem id {workitem._id} retry #{workitem.retries}")
         if("url" in payload):
             os.environ["url"] = payload["url"]
-        robot.run("example.robot")
-        workitem.name = f"Robot example completed"
+        result = robot.run("example.robot")
+        workitem.name = f"Robot example completed" 
+        if(result != 0):
+            raise ValueError(f"Robot example failed with exit code {result}")
         return payload
     async def __ProcessWorkitemWrapper(self, workitem):
         currentfiles = os.listdir(".")
@@ -42,7 +44,16 @@ class Worker:
             workitem.errortype = "application" # business rule will never retry / application will retry as mamy times as defined on the workitem queue
             workitem.errormessage = "".join(traceback.format_exception_only(type(e), e)).strip()
             workitem.errorsource = "".join(traceback.format_exception(e))
-            await self.c.UpdateWorkitem(workitem)
+            _files = []
+            files = os.listdir(".")
+            for file in files:
+                if(not file in currentfiles and os.path.isfile(file)):
+                    print(f"uploading {file}")
+                    _files.append(file)
+            await self.c.UpdateWorkitem(workitem, _files, True)
+            for file in files:
+                if(not file in currentfiles and os.path.isfile(file)):
+                    os.unlink(file)
             print(repr(e))
             traceback.print_tb(e.__traceback__)
     async def __loop_workitems(self):
