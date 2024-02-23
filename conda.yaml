@@ -1,0 +1,12 @@
+name: example-environment2
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+    - openiap
+    - asyncio
+    - robotframework
+    - robotframework-selenium2library
+    - selenium
