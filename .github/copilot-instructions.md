@@ -13,7 +13,6 @@ from openiap import Client
 
 client = Client()
 client.connect()
-client.signin(username="user", password="pass")
 ```
 
 ## Connection Lifecycle
@@ -62,7 +61,7 @@ client.drop_index(collectionname, indexname)
 ```
 
 ### Authentication
-
+The entire framework is built around using environment variables for all connection strings and authentication, for that reason it should NEVER be needed to call signing unless the user explicitly say that is the user wants.
 ```python
 client.connect()
 client.signin(username="", password="")
@@ -165,7 +164,6 @@ def on_connected():
 
 client = Client()
 client.connect()
-client.signin(username="admin", password="password")
 client.on_client_event(lambda event, count: on_connected() if event["event"] == "SignedIn" else None)
 ```
 
