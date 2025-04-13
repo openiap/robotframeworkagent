@@ -1,6 +1,6 @@
 {
     "name": "robotframeworktest",
-    "version": "0.0.3",
+    "version": "0.0.7",
     "description": "Python agent processing workitems using robot framework and python",
     "main": "main.py",
     "author": "OpenIAP ApS / Allan Zimmermann",
